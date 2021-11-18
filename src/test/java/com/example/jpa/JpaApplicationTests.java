@@ -29,12 +29,13 @@ void createProducts()
 		this.testCrud(i);
 }
 
+    @Test
 	void testCrud(int id)
 	{
 		Product product = new Product();
 		product.setId(id);
-		product.setName("mac mini");
-		product.setDesc("buget");
+		product.setName("vivo");
+		product.setDesc("processing king");
 		product.setPrice(1000.00);
 		this.createProduct(product);
 	//	product.setName("Updated product");

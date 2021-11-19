@@ -41,7 +41,6 @@ public class TestPagingAndSorting {
         Sort.Order desc = new Sort.Order(Sort.Direction.ASC, "desc");
         Page<Product> allProducts = productRepository.findAll(PageRequest.of(0, 3,Sort.by(Sort.Direction.DESC, "name","desc")));
        allProducts.forEach(product -> System.out.println(product));
-
     }
 
 

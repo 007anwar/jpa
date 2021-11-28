@@ -2,19 +2,26 @@ package com.example.jpa;
 
 import com.example.jpa.entity.Product;
 import com.example.jpa.repo.ProductRepository;
+import org.hibernate.Session;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
+
 @SpringBootTest
 public class FInderDemo {
     private final ProductRepository productRepository;
-
-    @Autowired
-    public FInderDemo(ProductRepository productRepository) {
+    private final EntityManager entityManager;
+      @Autowired
+    public FInderDemo(ProductRepository productRepository, EntityManager entityManager) {
         this.productRepository = productRepository;
+        this.entityManager = entityManager;
     }
+
 
     @Test
     public void testFindByName()
@@ -63,5 +70,20 @@ public class FInderDemo {
     {
         List<Product> products = productRepository.findByIdIn(List.of(2,3,7));
         products.forEach(product -> System.out.println("RESULT : "+product));
+    }
+
+    @Test
+     @Transactional//to enable level 1 cache, method should be marked with transactional
+    public void testCaching()
+    {
+        System.out.println("FINDING");
+        Optional<Product> byId1 = productRepository.findById(1);
+        Session unwrap = entityManager.unwrap(Session.class);
+        unwrap.evict(byId1.get());//used to remove object from the cache
+        System.out.println("FINDING AGAIN");
+        Optional<Product> byId = productRepository.findById(1);
+        byId.ifPresent(product -> {
+            System.out.println(product);
+        });
     }
 }

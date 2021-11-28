@@ -13,8 +13,10 @@ import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
 import java.nio.charset.Charset;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 @SpringBootTest
 public class JpqlTest {
@@ -135,4 +137,15 @@ public class JpqlTest {
         allStudentNative.forEach(stud-> System.out.println(stud));
     }
 
+
+    @Test
+    public void ListTest()
+    {
+        Student s1 = new Student();
+        Student s2 = new Student();
+        Set<Student> list=new HashSet<>();
+          list.add(s2);
+          list.add(s1);
+        System.out.println(list.size());
+    }
 }

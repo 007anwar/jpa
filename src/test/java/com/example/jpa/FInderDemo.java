@@ -86,4 +86,18 @@ public class FInderDemo {
             System.out.println(product);
         });
     }
+
+    @Test
+    public void getAllProd()
+    {
+        List<Product> allProducts = productRepository.getAllProducts();
+        allProducts.forEach(product -> System.out.println(product));
+    }
+
+    @Test
+    public void getAllProdByPrice()
+    {
+        List<Product> allProducts = productRepository.getAllProducts(8000);
+        allProducts.forEach(product -> System.out.println(product));
+    }
 }
